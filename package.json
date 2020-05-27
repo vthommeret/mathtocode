@@ -17,6 +17,8 @@
     "react-dom": "16.13.1",
     "react-katex": "^2.0.2",
     "react-textarea-autosize": "^8.0.1",
+    "skulpt": "^0.11.1",
+    "skulpt_numpy": "github:ebertmi/skulpt_numpy",
     "tailwindcss": "^1.4.6",
     "worker-loader": "^2.0.0"
   }

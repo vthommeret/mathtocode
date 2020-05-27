@@ -1,11 +1,11 @@
-import CodeWorker from '../workers/code.worker'
+import PythonWorker from '../workers/python.worker'
 
 let worker = null
 
 const getWorker = () => {
   if (process.browser && window.Worker) {
     if (worker === null) {
-      worker = new CodeWorker()
+      worker = new PythonWorker()
     }
     return worker
   }
