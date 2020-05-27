@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { InlineMath, BlockMath } from 'react-katex'
+import TextareaAutosize from 'react-textarea-autosize'
 
 import Head from 'next/head'
 import testCode from '../components/code'
@@ -9,7 +10,7 @@ const EQUAL = 'equal'
 const NOT_EQUAL = 'not_equal'
 
 export default function Home() {
-  const [answer, setAnswer] = useState('x')
+  const [answer, setAnswer] = useState('')
   const [result, setResult] = useState(null)
 
   const assertions = [
@@ -54,7 +55,8 @@ export default function Home() {
         </div>
 
         <div className="font-mono text-center">
-          <textarea className="h-6 bg-transparent text-center outline-none resize-none" value={answer} onChange={e => setAnswer(e.target.value)} onKeyPress={keyPress} spellCheck={false} />
+          <TextareaAutosize value={answer} placeholder="Enter code..." onChange={e => setAnswer(e.target.value)} onKeyPress={keyPress} spellCheck={false} autoFocus className="bg-transparent placeholder-gray-700 text-center outline-none resize-none" />
+
           {result === null ? null : (
             <p className="mt-12 text-yellow-300">{result}</p>
           )}
