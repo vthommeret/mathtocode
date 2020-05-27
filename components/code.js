@@ -18,7 +18,7 @@ const killWorker = () => {
   worker = null
 }
 
-const testCode = (code, timeout = 1000) => {
+const testCode = (code, assertions, timeout = 1000) => {
   const worker = getWorker()
   return new Promise((resolve, reject) => {
     if (!worker) {
@@ -44,7 +44,7 @@ const testCode = (code, timeout = 1000) => {
     }
 
     // Test code
-    worker.postMessage([code])
+    worker.postMessage([code, assertions])
   })
 }
 export default testCode

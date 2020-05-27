@@ -3,17 +3,28 @@ import { useState } from 'react'
 import Head from 'next/head'
 import testCode from '../components/code'
 
+const EQUAL = 'equal'
+const NOT_EQUAL = 'not_equal'
+
 export default function Home() {
-  const [answer, setAnswer] = useState('2+5')
+  const [answer, setAnswer] = useState('x+5')
   const [result, setResult] = useState(null)
 
+  const assertions = [
+    [EQUAL, 2, 4],
+    [EQUAL, 3, 6],
+    [EQUAL, 15, 30],
+    [NOT_EQUAL, 10, 15],
+    [EQUAL, 10, 15],
+  ]
+
   const testAndDisplayCode = () => {
-    testCode(answer)
+    testCode(answer, assertions)
       .then(res => {
-        setResult(res)
+        setResult(res ? 'True' : 'False')
       })
       .catch(msg => {
-        setResult('Unable to test code: ' + msg)
+        setResult(msg)
       })
   }
 
