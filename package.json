@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.2.0",
+    "@tensorflow/tfjs": "^2.0.0",
     "@zeit/next-workers": "^1.0.0",
     "autoprefixer": "^9.8.0",
     "next": "9.4.2",
@@ -17,8 +18,6 @@
     "react-dom": "16.13.1",
     "react-katex": "^2.0.2",
     "react-textarea-autosize": "^8.0.1",
-    "skulpt": "^0.11.1",
-    "skulpt_numpy": "github:ebertmi/skulpt_numpy",
     "tailwindcss": "^1.4.6",
     "worker-loader": "^2.0.0"
   }
