@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { InlineMath, BlockMath } from 'react-katex'
+
 import Head from 'next/head'
 import testCode from '../components/code'
 
@@ -7,7 +9,7 @@ const EQUAL = 'equal'
 const NOT_EQUAL = 'not_equal'
 
 export default function Home() {
-  const [answer, setAnswer] = useState('x+5')
+  const [answer, setAnswer] = useState('x')
   const [result, setResult] = useState(null)
 
   const assertions = [
@@ -15,7 +17,7 @@ export default function Home() {
     [EQUAL, 3, 6],
     [EQUAL, 15, 30],
     [NOT_EQUAL, 10, 15],
-    [EQUAL, 10, 15],
+    [EQUAL, 25, 5],
   ]
 
   const testAndDisplayCode = () => {
@@ -47,8 +49,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container min-h-screen m-auto flex flex-col justify-center items-center bg-black text-white font-sans">
+        <div className="mb-12 p-4 bg-white text-black rounded">
+          <BlockMath math="\sqrt{x}" />
+        </div>
+
         <div className="font-mono text-center">
-          <textarea className="h-6 bg-transparent text-center outline-none resize-none" value={answer} onChange={e => setAnswer(e.target.value)} onKeyPress={keyPress} />
+          <textarea className="h-6 bg-transparent text-center outline-none resize-none" value={answer} onChange={e => setAnswer(e.target.value)} onKeyPress={keyPress} spellCheck={false} />
           {result === null ? null : (
             <p className="mt-12 text-yellow-300">{result}</p>
           )}
