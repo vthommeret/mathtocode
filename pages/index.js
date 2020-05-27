@@ -50,7 +50,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container min-h-screen m-auto flex flex-col justify-center items-center bg-black text-white font-sans">
-        <div className="mb-12 p-4 bg-white text-black rounded">
+        <div className="mb-12 px-4 p-2 bg-white text-black rounded">
           <BlockMath math="\sqrt{x}" />
         </div>
 
