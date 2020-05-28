@@ -49,22 +49,29 @@ export default function Home() {
     <>
       <Head>
         <title>Math to Code</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32x32.png" />
       </Head>
-      <div className="container min-h-screen m-auto flex flex-col justify-center items-center bg-black text-white font-sans">
-        <div className="mb-12 px-4 p-2 bg-white text-black rounded">
-          <BlockMath math="\sqrt{x}" />
+
+      <div className="container-shadow md:flex">
+        <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-2/5">
+          <h2 className="mb-8 md:mb-10 text-2xl font-medium">Math</h2>
+          <div className="text-lg">
+            <InlineMath math="\sqrt{x}" />
+          </div>
         </div>
 
-        <div className="font-mono text-center">
-          <TextareaAutosize value={answer} placeholder="Enter code..." onChange={e => setAnswer(e.target.value)} onKeyPress={keyPress} spellCheck={false} autoFocus className="bg-transparent placeholder-gray-700 text-center outline-none resize-none" />
-
+        <div className="px-8 py-10 md:px-12 md:py-16 bg-black text-white md:flex-1">
+          <h2 className="mb-8 md:mb-10 text-2xl font-medium">Code</h2>
+          <TextareaAutosize value={answer} placeholder="Enter code..." onChange={e => setAnswer(e.target.value)} onKeyPress={keyPress} spellCheck={false} autoFocus className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono" />
+          <div>
+            <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded">Submit answer</button>
+          </div>
           {result === null ? null : (
-            <p className="mt-12 text-yellow-300">{result}</p>
+            <p className="mt-8 md:mt-10 text-yellow-300 font-mono">{result}</p>
           )}
         </div>
-        <button onClick={submitAnswer} className="mt-12 px-2 py-1 bg-green-300 text-black font-medium rounded">Submit answer</button>
       </div>
     </>
   )
