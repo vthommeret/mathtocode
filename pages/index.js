@@ -21,6 +21,8 @@ export default function Home() {
     [EQUAL, 25, 5],
   ]
 
+  const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+
   const testAndDisplayCode = () => {
     testCode(answer, assertions)
       .then(res => {
@@ -37,7 +39,7 @@ export default function Home() {
   }
 
   const keyPress = e => {
-    if (e.ctrlKey && e.key === 'Enter') {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault()
       testAndDisplayCode()
     }
@@ -67,6 +69,7 @@ export default function Home() {
           <TextareaAutosize value={answer} placeholder="Enter code..." onChange={e => setAnswer(e.target.value)} onKeyPress={keyPress} spellCheck={false} autoFocus className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono" />
           <div>
             <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded">Submit answer</button>
+            <span className="ml-2 text-sm text-green-300">{isMacLike ? '⌘-enter' : 'ctrl-enter'}</span>
           </div>
           {result === null ? null : (
             <p className="mt-8 md:mt-10 text-yellow-300 font-mono">{result}</p>
