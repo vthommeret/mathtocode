@@ -12,7 +12,7 @@ onmessage = function(e) {
 }
 
 function testCode(code, params, assertion) {
-  const [assert, args, expected] = assertion
+  const {type: assert, args, expected} = assertion
 
   // Parameters and arguments
   var paramsStr = params.join(', ')

@@ -15,7 +15,7 @@ const questions = [
     params: ['x'],
     solution: 'Math.sqrt(x)',
     assertions: [
-      [EQUAL, 25, 5],
+      {type: EQUAL, args: 25, expected: 5},
     ],
   },
   {
@@ -23,7 +23,7 @@ const questions = [
     params: ['x'],
     solution: 'Math.abs(x)',
     assertions: [
-      [EQUAL, -5, 5],
+      {type: EQUAL, args: -5, expected: 5},
     ],
   },
   {
@@ -31,7 +31,7 @@ const questions = [
     params: ['x'],
     solution: '2*x',
     assertions: [
-      [EQUAL, 5, 10],
+      {type: EQUAL, args: 5, expected: 10},
     ],
   },
   {
@@ -39,7 +39,7 @@ const questions = [
     params: ['x', 'y'],
     solution: 'Math.pow(x,y)',
     assertions: [
-      [EQUAL, [5, 2], 25],
+      {type: EQUAL, args: [5, 2], expected: 25},
     ],
   },
 ]
