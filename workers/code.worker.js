@@ -1,4 +1,4 @@
-import * as tf from '@tensorflow/tfjs'
+import * as tfjs from '@tensorflow/tfjs'
 
 var EQUAL = 'equal'
 var NOT_EQUAL = 'not_equal'
@@ -18,8 +18,11 @@ function testCode(code, assertion) {
   // Add 'return' to single-line code
   var codeLn = code.match(/[^\r\n]+/g).length === 1 ? `return ${code}` : code;
 
+  // Imported TensorFlow isn't available for some reason with out aliasing
+  var tf = tfjs;
+
   // Create executable function
-  var codeFn = `(function (x) { ${codeLn}; })(x)`
+  var codeFn = `(function (x, tf) { ${codeLn}; })(x, tf)`
 
   var res = eval(codeFn)
 
