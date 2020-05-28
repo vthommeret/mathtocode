@@ -44,7 +44,7 @@ const questions = [
   },
 ]
 
-export default function Home({ isMacLike }) {
+const Home = ({ isMacLike }) => {
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
 
@@ -135,9 +135,11 @@ export default function Home({ isMacLike }) {
   )
 }
 
-export async function getServerSideProps(ctx) {
+export const getServerSideProps = async ctx => {
   const ua = process.browser ? navigator.userAgent : ctx.req.headers['user-agent']
   return { props: {
     isMacLike: /(Mac|iPhone|iPod|iPad)/i.test(ua)
   }}
 }
+
+export default Home

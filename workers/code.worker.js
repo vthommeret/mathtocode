@@ -3,7 +3,7 @@ import * as tfjs from '@tensorflow/tfjs'
 var EQUAL = 'equal'
 var NOT_EQUAL = 'not_equal'
 
-onmessage = function(e) {
+onmessage = e => {
   var code = e.data[0];
   var params = e.data[1];
   var assertions = e.data[2];
@@ -11,7 +11,7 @@ onmessage = function(e) {
   postMessage(res)
 }
 
-function testCode(code, params, assertion) {
+const testCode = (code, params, assertion) => {
   const {type: assert, args, expected} = assertion
 
   // Parameters and arguments
