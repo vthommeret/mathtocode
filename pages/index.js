@@ -4,7 +4,7 @@ import { InlineMath, BlockMath } from 'react-katex'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import Head from 'next/head'
-import testCode from '../components/code'
+import testCode, { preloadWorker } from '../components/code'
 
 const EQUAL = 'equal'
 const NOT_EQUAL = 'not_equal'
@@ -42,6 +42,8 @@ export default function Home() {
       testAndDisplayCode()
     }
   }
+
+  preloadWorker()
 
   return (
     <>

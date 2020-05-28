@@ -20,6 +20,10 @@ const killWorker = () => {
   worker = null
 }
 
+const preloadWorker = () => {
+  getWorker()
+}
+
 const testCode = (code, assertions, timeout = 1000) => {
   const worker = getWorker()
   return new Promise((resolve, reject) => {
@@ -49,4 +53,6 @@ const testCode = (code, assertions, timeout = 1000) => {
     worker.postMessage([code, assertions])
   })
 }
+
+export { preloadWorker }
 export default testCode
