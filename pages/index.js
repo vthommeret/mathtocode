@@ -37,7 +37,7 @@ export default function Home() {
   }
 
   const keyPress = e => {
-    if (e.key === 'Enter') {
+    if (e.ctrlKey && e.key === 'Enter') {
       e.preventDefault()
       testAndDisplayCode()
     }

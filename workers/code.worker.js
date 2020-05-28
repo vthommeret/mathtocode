@@ -15,7 +15,12 @@ function testCode(code, assertion) {
   var x = assertion[1]
   var expected = assertion[2]
 
-  var codeFn = '(function (x) { return ' + code + '})(' + x + ')'
+  // Add 'return' to single-line code
+  var codeLn = code.match(/[^\r\n]+/g).length === 1 ? `return ${code}` : code;
+
+  // Create executable function
+  var codeFn = `(function (x) { ${codeLn}; })(x)`
+
   var res = eval(codeFn)
 
   switch (assert) {
