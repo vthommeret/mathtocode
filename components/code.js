@@ -24,7 +24,7 @@ const preloadWorker = () => {
   getWorker()
 }
 
-const testCode = (code, assertions, timeout = 1000) => {
+const testCode = (code, question, timeout = 1000) => {
   const worker = getWorker()
   return new Promise((resolve, reject) => {
     if (!worker) {
@@ -50,7 +50,7 @@ const testCode = (code, assertions, timeout = 1000) => {
     }
 
     // Test code
-    worker.postMessage([code, assertions])
+    worker.postMessage([code, question.params, question.assertions])
   })
 }
 

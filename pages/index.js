@@ -9,43 +9,87 @@ import testCode, { preloadWorker } from '../components/code'
 const EQUAL = 'equal'
 const NOT_EQUAL = 'not_equal'
 
-export default function Home() {
-  const [answer, setAnswer] = useState('')
-  const [result, setResult] = useState(null)
+const questions = [
+  {
+    math: '\\sqrt{x}',
+    params: ['x'],
+    solution: 'Math.sqrt(x)',
+    assertions: [
+      [EQUAL, 25, 5],
+    ],
+  },
+  {
+    math: '|x|',
+    params: ['x'],
+    solution: 'Math.abs(x)',
+    assertions: [
+      [EQUAL, -5, 5],
+    ],
+  },
+  {
+    math: '2x',
+    params: ['x'],
+    solution: '2*x',
+    assertions: [
+      [EQUAL, 5, 10],
+    ],
+  },
+  {
+    math: 'x^y',
+    params: ['x', 'y'],
+    solution: 'Math.pow(x,y)',
+    assertions: [
+      [EQUAL, [5, 2], 25],
+    ],
+  },
+]
 
-  const assertions = [
-    [EQUAL, 2, 4],
-    [EQUAL, 3, 6],
-    [EQUAL, 15, 30],
-    [NOT_EQUAL, 10, 15],
-    [EQUAL, 25, 5],
-  ]
+export default function Home() {
+  const [questionIdx, setQuestionIdx] = useState(0)
+  const [answers, setAnswers] = useState({})
 
   const isMacLike = process.browser ? /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) : false;
 
   const testAndDisplayCode = () => {
-    testCode(answer, assertions)
+    testCode(answers[questionIdx].code, questions[questionIdx])
       .then(res => {
-        setResult(res ? 'True' : 'False')
+        setAnswers({
+          ...answers,
+          [questionIdx]: {...answers[questionIdx], result: res ? 'True' : 'False'}
+        })
       })
       .catch(msg => {
-        setResult(msg)
+        setAnswers({
+          ...answers,
+          [questionIdx]: {...answers[questionIdx], result: msg}
+        })
       })
   }
 
   const nextQuestion = e => {
     e.preventDefault()
-    console.log('next')
+    if (questionIdx != questions.length - 1) {
+      setQuestionIdx(questionIdx + 1)
+    }
   }
 
   const previousQuestion = e => {
     e.preventDefault()
-    console.log('previous')
+    if (questionIdx != 0) {
+      setQuestionIdx(questionIdx - 1)
+    }
   }
 
   const submitAnswer = e => {
     e.preventDefault()
     testAndDisplayCode()
+  }
+
+  const updateAnswer = e => {
+    setAnswers({
+      ...answers,
+      [questionIdx]: {code: e.target.value}
+    })
   }
 
   const keyPress = e => {
@@ -70,26 +114,26 @@ export default function Home() {
         <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-2/5">
           <h2 className="mb-8 md:mb-10 text-2xl font-medium">Math</h2>
           <div className="mb-8 md:mb-10 text-lg">
-            <InlineMath math="\sqrt{x}" />
+            <InlineMath math={questions[questionIdx].math} />
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <button onClick={nextQuestion} className="px-2 py-1 border border-black font-medium rounded">Next</button>
-              <button onClick={previousQuestion} className="ml-2 px-2 py-1 font-medium rounded">Previous</button>
+              <button onClick={nextQuestion} className={'px-2 py-1 border border-black font-medium rounded' + (questionIdx === questions.length - 1 ? ' border-gray-400 text-gray-400' : '')}>Next</button>
+              <button onClick={previousQuestion} className={'ml-2 px-2 py-1 font-medium rounded' + (questionIdx === 0 ? ' text-gray-400' : '')}>Previous</button>
             </div>
-            <p className="py-1 font-medium">1 <span className="text-gray-500">/ 10</span></p>
+            <p className="py-1 font-medium">{questionIdx + 1} <span className="text-gray-500">/ {questions.length}</span></p>
           </div>
         </div>
 
         <div className="px-8 py-10 md:px-12 md:py-16 bg-black text-white md:flex-1">
           <h2 className="mb-8 md:mb-10 text-2xl font-medium">Code</h2>
-          <TextareaAutosize value={answer} placeholder="Enter code..." onChange={e => setAnswer(e.target.value)} onKeyPress={keyPress} spellCheck={false} autoFocus className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono" />
+          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} onKeyPress={keyPress} spellCheck={false} autoFocus className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono" />
           <div>
             <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded">Submit answer</button>
             <span className="ml-2 text-sm text-green-300">{isMacLike ? '⌘-enter' : 'ctrl-enter'}</span>
           </div>
-          {result === null ? null : (
-            <p className="mt-8 md:mt-10 text-yellow-300 font-mono">{result}</p>
+          {!answers.hasOwnProperty(questionIdx) || !answers[questionIdx].hasOwnProperty('result') ? null : (
+            <p className="mt-8 md:mt-10 text-yellow-300 font-mono">{answers[questionIdx].result}</p>
           )}
         </div>
       </div>
