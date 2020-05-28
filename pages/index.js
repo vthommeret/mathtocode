@@ -49,7 +49,8 @@ export default function Home() {
     <>
       <Head>
         <title>Math to Code</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32x32.png" />
       </Head>
       <div className="container min-h-screen m-auto flex flex-col justify-center items-center bg-black text-white font-sans">
         <div className="mb-12 px-4 p-2 bg-white text-black rounded">
