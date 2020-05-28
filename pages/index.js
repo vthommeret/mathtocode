@@ -21,7 +21,7 @@ export default function Home() {
     [EQUAL, 25, 5],
   ]
 
-  const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+  const isMacLike = process.browser ? /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) : false;
 
   const testAndDisplayCode = () => {
     testCode(answer, assertions)
