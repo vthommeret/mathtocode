@@ -33,6 +33,16 @@ export default function Home() {
       })
   }
 
+  const nextQuestion = e => {
+    e.preventDefault()
+    console.log('next')
+  }
+
+  const previousQuestion = e => {
+    e.preventDefault()
+    console.log('previous')
+  }
+
   const submitAnswer = e => {
     e.preventDefault()
     testAndDisplayCode()
@@ -59,8 +69,15 @@ export default function Home() {
       <div className="container-shadow md:flex">
         <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-2/5">
           <h2 className="mb-8 md:mb-10 text-2xl font-medium">Math</h2>
-          <div className="text-lg">
+          <div className="mb-8 md:mb-10 text-lg">
             <InlineMath math="\sqrt{x}" />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <button onClick={nextQuestion} className="px-2 py-1 border border-black font-medium rounded">Next</button>
+              <button onClick={previousQuestion} className="ml-2 px-2 py-1 font-medium rounded">Previous</button>
+            </div>
+            <p className="py-1 font-medium">1 <span className="text-gray-500">/ 10</span></p>
           </div>
         </div>
 
