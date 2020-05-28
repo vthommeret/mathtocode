@@ -57,6 +57,9 @@ const Home = ({ isMacLike }) => {
           ...answers,
           [questionIdx]: {...answers[questionIdx], result: res ? 'True' : 'False'}
         })
+        if (res) {
+          answerTextarea.current.blur()
+        }
       })
       .catch(msg => {
         setAnswers({
