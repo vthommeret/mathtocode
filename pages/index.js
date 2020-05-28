@@ -66,18 +66,10 @@ export default function Home({ isMacLike }) {
       })
   }
 
-  const nextQuestion = e => {
+  const updateQuestion = (e, increment) => {
     e.preventDefault()
-    if (questionIdx != questions.length - 1) {
-      setQuestionIdx(questionIdx + 1)
-      answerRef.current.focus()
-    }
-  }
-
-  const previousQuestion = e => {
-    e.preventDefault()
-    if (questionIdx != 0) {
-      setQuestionIdx(questionIdx - 1)
+    if (questionIdx != (increment ? questions.length - 1 : 0)) {
+      setQuestionIdx(questionIdx + (increment ? 1 : -1))
       answerRef.current.focus()
     }
   }
@@ -120,8 +112,8 @@ export default function Home({ isMacLike }) {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <button onClick={nextQuestion} className={'px-2 py-1 border border-black font-medium rounded' + (questionIdx === questions.length - 1 ? ' border-gray-400 text-gray-400' : '')}>Next</button>
-              <button onClick={previousQuestion} className={'ml-2 px-2 py-1 font-medium rounded' + (questionIdx === 0 ? ' text-gray-400' : '')}>Previous</button>
+              <button onClick={e => updateQuestion(e, true)} className={'px-2 py-1 border border-black font-medium rounded' + (questionIdx === questions.length - 1 ? ' border-gray-400 text-gray-400' : '')}>Next</button>
+              <button onClick={e => updateQuestion(e, false)} className={'ml-2 px-2 py-1 font-medium rounded' + (questionIdx === 0 ? ' text-gray-400' : '')}>Previous</button>
             </div>
             <p className="py-1 font-medium">{questionIdx + 1} <span className="text-gray-500">/ {questions.length}</span></p>
           </div>
