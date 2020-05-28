@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 import { InlineMath, BlockMath } from 'react-katex'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -48,7 +48,7 @@ const Home = ({ isMacLike }) => {
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
 
-  const answerRef = React.createRef()
+  const answerTextarea = useRef()
 
   const testAndDisplayCode = () => {
     testCode(answers[questionIdx].code, questions[questionIdx])
@@ -70,7 +70,7 @@ const Home = ({ isMacLike }) => {
     e.preventDefault()
     if (questionIdx != (increment ? questions.length - 1 : 0)) {
       setQuestionIdx(questionIdx + (increment ? 1 : -1))
-      answerRef.current.focus()
+      answerTextarea.current.focus()
     }
   }
 
@@ -121,7 +121,7 @@ const Home = ({ isMacLike }) => {
 
         <div className="px-8 py-10 md:px-12 md:py-16 bg-black text-white md:flex-1">
           <h2 className="mb-8 md:mb-10 text-2xl font-medium">Code</h2>
-          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} onKeyPress={keyPress} ref={answerRef} spellCheck={false} autoFocus className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono" />
+          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} onKeyPress={keyPress} ref={answerTextarea} spellCheck={false} autoFocus className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono" />
           <div>
             <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded">Submit answer</button>
             <span className="ml-2 text-sm text-green-300">{isMacLike ? '⌘-enter' : 'ctrl-enter'}</span>
