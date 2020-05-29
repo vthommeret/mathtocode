@@ -9,6 +9,8 @@ import testCode, { preloadWorker } from '../components/code'
 const EQUAL = 'equal'
 const NOT_EQUAL = 'not_equal'
 
+const m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
 const questions = [
   {
     math: '\\sqrt{x}',
@@ -40,6 +42,14 @@ const questions = [
     solution: 'Math.pow(x,y)',
     assertions: [
       {type: EQUAL, args: [5, 2], expected: 25},
+    ],
+  },
+  {
+    math: '\\| m \\|_F = \\left( \\sum_{i,j=1}^n | m_{ij} |^2 \\right)^{1/2}',
+    params: ['m'],
+    solution: 'm.square().sum().sqrt()',
+    assertions: [
+      {type: EQUAL, args: [m], expected: Math.sqrt(285)},
     ],
   },
 ]
