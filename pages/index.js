@@ -172,7 +172,7 @@ const Home = ({ isMacLike }) => {
       </div>
       <div className={'px-8 py-10 md:px-12 md:py-10 md:max-w-screen-md md:mx-auto text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
         {questionIdx > 0 ? (
-          <button onClick={e => updateQuestion(e, false)} className="py-2 text-black text-lg font-medium">&larr; Back </button>
+          <button onClick={e => updateQuestion(e, false)} className="-mx-3 px-3 py-2 text-black text-lg font-medium rounded subtle">&larr; Back </button>
         ) : null}
         {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success && questionIdx < questions.length - 1 ? (
           <button onClick={e => updateQuestion(e, true)} className="px-3 py-2 bg-green-300 text-black text-lg font-semibold rounded shadow-md">Next question &rarr;</button>

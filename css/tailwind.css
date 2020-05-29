@@ -9,10 +9,13 @@ html, body {
 }
 
 button {
-  opacity: .9;
+  opacity: .85;
 }
 button:hover {
   opacity: 1;
+}
+button.subtle:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 @tailwind components;
