@@ -196,7 +196,7 @@ const Home = ({ isMacLike }) => {
         {questionIdx > 0 ? (
           <div>
             <button onClick={e => updateQuestion(e, false)} className="-mx-3 px-3 py-2 text-black text-lg font-medium rounded subtle">&larr; Back </button>
-            <span className="ml-2 text-sm text-gray-700">{isMacLike ? '⌘-del' : 'ctrl-del'}</span>
+            <span className="ml-5 text-sm text-gray-700">{isMacLike ? '⌘-del' : 'ctrl-del'}</span>
           </div>
         ) : null}
         {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success && questionIdx < questions.length - 1 ? (
