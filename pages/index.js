@@ -128,7 +128,7 @@ const Home = ({ isMacLike }) => {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32x32.png" />
       </Head>
 
-      <div className="container-shadow md:flex">
+      <div className="container-shadow md:max-w-screen-md md:mt-10 md:flex md:mx-auto">
         <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-2/5">
           <h2 className="mb-8 md:mb-10 text-2xl font-medium flex justify-between items-center">
             <span>Math</span>
@@ -158,7 +158,7 @@ const Home = ({ isMacLike }) => {
           )}
         </div>
       </div>
-      <div className={'px-8 py-10 md:px-12 md:py-16 text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
+      <div className={'px-8 py-10 md:px-12 md:py-10 md:max-w-screen-md md:mx-auto text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
         {questionIdx > 0 ? (
           <button onClick={e => updateQuestion(e, false)} className="py-2 text-black text-lg font-medium">&larr; Back </button>
         ) : null}
