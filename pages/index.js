@@ -90,8 +90,11 @@ const Home = ({ isMacLike }) => {
   const updateQuestion = (e, increment) => {
     e.preventDefault()
     if (questionIdx != (increment ? questions.length - 1 : 0)) {
-      setQuestionIdx(questionIdx + (increment ? 1 : -1))
-      answerTextarea.current.focus()
+      const newQuestionIdx = questionIdx + (increment ? 1 : -1)
+      setQuestionIdx(newQuestionIdx)
+      if (!answers.hasOwnProperty(newQuestionIdx) || !answers[newQuestionIdx].success) {
+        answerTextarea.current.focus()
+      }
     }
   }
 
