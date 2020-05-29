@@ -153,7 +153,7 @@ const Home = ({ isMacLike }) => {
       </Head>
 
       <div className="container-shadow md:max-w-screen-md md:mt-10 md:flex md:mx-auto">
-        <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-2/5">
+        <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-1/2">
           <h2 className="mb-8 md:mb-10 text-2xl font-medium flex justify-between items-center">
             <span>Math</span>
             <span className="text-lg">{questionIdx + 1} <span className="text-gray-500">/ {questions.length}</span></span>
@@ -168,7 +168,7 @@ const Home = ({ isMacLike }) => {
             <span>Code</span>
             {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? <span className="text-lg"><span className="text-green-300">✓</span> Success</span> : null}
           </h2>
-          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} ref={answerTextarea} spellCheck={false} autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
+          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} ref={answerTextarea} spellCheck={false} autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="w-full mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? null : (
             <div>
               <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded disabled:opacity-50" disabled={!answers.hasOwnProperty(questionIdx) || (answers[questionIdx].code === '') || answers[questionIdx].loading}>{answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading ? 'Loading…' : 'Submit answer'}</button>
