@@ -54,9 +54,21 @@ const Home = ({ isMacLike }) => {
   useEffect(() => {
     const eventName = 'keydown'
     const listener = e => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault()
-        testAndDisplayCode()
+      if (e.ctrlKey || e.metaKey) {
+        switch (e.key) {
+          case 'Enter':
+            e.preventDefault()
+            if (answers.hasOwnProperty(questionIdx) && answers[questionIdx].success) {
+              updateQuestion(e, true)
+            } else {
+              testAndDisplayCode()
+            }
+            break
+          case 'Backspace':
+            e.preventDefault()
+            updateQuestion(e, false)
+            break
+        }
       }
     }
     window.addEventListener(eventName, listener)
@@ -172,10 +184,16 @@ const Home = ({ isMacLike }) => {
       </div>
       <div className={'px-8 py-10 md:px-12 md:py-10 md:max-w-screen-md md:mx-auto text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
         {questionIdx > 0 ? (
-          <button onClick={e => updateQuestion(e, false)} className="-mx-3 px-3 py-2 text-black text-lg font-medium rounded subtle">&larr; Back </button>
+          <div>
+            <button onClick={e => updateQuestion(e, false)} className="-mx-3 px-3 py-2 text-black text-lg font-medium rounded subtle">&larr; Back </button>
+            <span className="ml-2 text-sm text-gray-700">{isMacLike ? '⌘-del' : 'ctrl-del'}</span>
+          </div>
         ) : null}
         {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success && questionIdx < questions.length - 1 ? (
-          <button onClick={e => updateQuestion(e, true)} className="px-3 py-2 bg-green-300 text-black text-lg font-semibold rounded shadow-md">Next question &rarr;</button>
+          <div>
+            <span className="mr-2 text-sm text-gray-700">{isMacLike ? '⌘-enter' : 'ctrl-enter'}</span>
+            <button onClick={e => updateQuestion(e, true)} className="px-3 py-2 bg-green-300 text-black text-lg font-semibold rounded shadow-md">Next question &rarr;</button>
+          </div>
         ) : null}
       </div>
     </>
