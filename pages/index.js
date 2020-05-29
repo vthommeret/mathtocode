@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import { InlineMath, BlockMath } from 'react-katex'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -50,7 +50,26 @@ const Home = ({ isMacLike }) => {
 
   const answerTextarea = useRef()
 
+  // Submit code on cmd/ctrl-enter
+  useEffect(() => {
+    const eventName = 'keydown'
+    const listener = e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault()
+        testAndDisplayCode()
+      }
+    }
+    window.addEventListener(eventName, listener)
+    return () => {
+      window.removeEventListener(eventName, listener)
+    }
+  })
+
   const testAndDisplayCode = () => {
+    if (!answers.hasOwnProperty(questionIdx) || answers[questionIdx].code === '') {
+      return
+    }
+
     setAnswers({
       ...answers,
       [questionIdx]: {
@@ -110,13 +129,6 @@ const Home = ({ isMacLike }) => {
     })
   }
 
-  const keyPress = e => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-      e.preventDefault()
-      testAndDisplayCode()
-    }
-  }
-
   preloadWorker()
 
   return (
@@ -144,7 +156,7 @@ const Home = ({ isMacLike }) => {
             <span>Code</span>
             {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? <span className="text-lg"><span className="text-green-300">✓</span> Success</span> : null}
           </h2>
-          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} onKeyPress={keyPress} ref={answerTextarea} spellCheck={false} autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
+          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} ref={answerTextarea} spellCheck={false} autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? null : (
             <div>
               <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded disabled:opacity-50" disabled={!answers.hasOwnProperty(questionIdx) || (answers[questionIdx].code === '') || answers[questionIdx].loading}>{answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading ? 'Loading…' : 'Submit answer'}</button>
