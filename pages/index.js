@@ -15,41 +15,41 @@ const questions = [
   {
     math: '\\sqrt{x}',
     params: ['x'],
-    solution: 'Math.sqrt(x)',
+    solution: x => { return x.sqrt() },
     assertions: [
-      {type: EQUAL, args: [25], expected: 5},
+      {type: EQUAL, args: [25]},
     ],
   },
   {
     math: '|x|',
     params: ['x'],
-    solution: 'Math.abs(x)',
+    solution: x => { return x.abs() },
     assertions: [
-      {type: EQUAL, args: [-5], expected: 5},
+      {type: EQUAL, args: [-5]},
     ],
   },
   {
     math: '2x',
     params: ['x'],
-    solution: '2*x',
+    solution: x => { return x.mul(2) },
     assertions: [
-      {type: EQUAL, args: [5], expected: 10},
+      {type: EQUAL, args: [5]},
     ],
   },
   {
     math: 'x^y',
     params: ['x', 'y'],
-    solution: 'Math.pow(x,y)',
+    solution: (x, y) => { return x.pow(y) },
     assertions: [
-      {type: EQUAL, args: [5, 2], expected: 25},
+      {type: EQUAL, args: [5, 2]},
     ],
   },
   {
     math: '\\| m \\|_F = \\left( \\sum_{i,j=1}^n | m_{ij} |^2 \\right)^{1/2}',
     params: ['m'],
-    solution: 'm.square().sum().sqrt()',
+    solution: m => { return m.square().sum().sqrt() },
     assertions: [
-      {type: EQUAL, args: [m], expected: Math.sqrt(285)},
+      {type: EQUAL, args: [m]},
     ],
   },
 ]

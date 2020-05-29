@@ -50,7 +50,7 @@ const testCode = (code, question, timeout = 1000) => {
     }
 
     // Test code
-    worker.postMessage([code, question.params, question.assertions])
+    worker.postMessage([code, question.params, question.assertions, question.solution.toString()])
   })
 }
 

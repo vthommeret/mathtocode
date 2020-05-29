@@ -7,12 +7,13 @@ onmessage = e => {
   var code = e.data[0];
   var params = e.data[1];
   var assertions = e.data[2];
-  var res = testCode(code, params, assertions[0]);
+  var solution = e.data[3];
+  var res = testCode(code, params, assertions[0], solution);
   postMessage(res)
 }
 
-const testCode = (code, params, assertion) => {
-  const {type: assert, args, expected} = assertion
+const testCode = (code, params, assertion, solution) => {
+  const {type: assert, args} = assertion
 
   // Imported TensorFlow isn't available for some reason with out aliasing
   var tf = tfjs;
@@ -33,6 +34,10 @@ const testCode = (code, params, assertion) => {
   if (res.constructor.name !== 'Tensor') {
     throw 'Result must be tf.tensor'
   }
+
+  // Create solution function / expected value
+  const solutionFn = new Function(`return ${solution}`)()
+  const expected = solutionFn.apply(null, tensors)
 
   // Determine if all elements equal expected value
   var els = res.dataSync().length
