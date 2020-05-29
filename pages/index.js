@@ -51,11 +51,24 @@ const Home = ({ isMacLike }) => {
   const answerTextarea = useRef()
 
   const testAndDisplayCode = () => {
+    setAnswers({
+      ...answers,
+      [questionIdx]: {
+        ...answers[questionIdx],
+        loading: true,
+      }
+    })
+    
     testCode(answers[questionIdx].code, questions[questionIdx])
       .then(res => {
         setAnswers({
           ...answers,
-          [questionIdx]: {...answers[questionIdx], result: res ? 'True' : 'False'}
+          [questionIdx]: {
+            ...answers[questionIdx],
+            result: res ? 'Correct' : 'Incorrect answer',
+            success: res,
+            loading: false,
+          }
         })
         if (res) {
           answerTextarea.current.blur()
@@ -64,7 +77,12 @@ const Home = ({ isMacLike }) => {
       .catch(msg => {
         setAnswers({
           ...answers,
-          [questionIdx]: {...answers[questionIdx], result: msg}
+          [questionIdx]: {
+            ...answers[questionIdx],
+            result: msg,
+            success: false,
+            loading: false,
+          }
         })
       })
   }
@@ -109,30 +127,41 @@ const Home = ({ isMacLike }) => {
 
       <div className="container-shadow md:flex">
         <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-2/5">
-          <h2 className="mb-8 md:mb-10 text-2xl font-medium">Math</h2>
+          <h2 className="mb-8 md:mb-10 text-2xl font-medium flex justify-between items-center">
+            <span>Math</span>
+            <span className="text-lg">{questionIdx + 1} <span className="text-gray-500">/ {questions.length}</span></span>
+          </h2>
           <div className="mb-8 md:mb-10 text-lg">
             <InlineMath math={questions[questionIdx].math} />
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <button onClick={e => updateQuestion(e, true)} className={'px-2 py-1 border border-black font-medium rounded' + (questionIdx === questions.length - 1 ? ' border-gray-400 text-gray-400' : '')}>Next</button>
-              <button onClick={e => updateQuestion(e, false)} className={'ml-2 px-2 py-1 font-medium rounded' + (questionIdx === 0 ? ' text-gray-400' : '')}>Previous</button>
-            </div>
-            <p className="py-1 font-medium">{questionIdx + 1} <span className="text-gray-500">/ {questions.length}</span></p>
           </div>
         </div>
 
         <div className="px-8 py-10 md:px-12 md:py-16 bg-black text-white md:flex-1">
-          <h2 className="mb-8 md:mb-10 text-2xl font-medium">Code</h2>
-          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} onKeyPress={keyPress} ref={answerTextarea} spellCheck={false} autoFocus className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono" />
-          <div>
-            <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded">Submit answer</button>
-            <span className="ml-2 text-sm text-green-300">{isMacLike ? '⌘-enter' : 'ctrl-enter'}</span>
-          </div>
-          {!answers.hasOwnProperty(questionIdx) || !answers[questionIdx].hasOwnProperty('result') ? null : (
-            <p className="mt-8 md:mt-10 text-yellow-300 font-mono">{answers[questionIdx].result}</p>
+          <h2 className="mb-8 md:mb-10 text-2xl font-medium flex justify-between items-center">
+            <span>Code</span>
+            {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? <span className="text-lg"><span className="text-green-300">✓</span> Success</span> : null}
+          </h2>
+          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} onKeyPress={keyPress} ref={answerTextarea} spellCheck={false} autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
+          {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? null : (
+            <div>
+              <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded disabled:opacity-50" disabled={!answers.hasOwnProperty(questionIdx) || (answers[questionIdx].code === '') || answers[questionIdx].loading}>{answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading ? 'Loading…' : 'Submit answer'}</button>
+              <span className="ml-2 text-sm text-gray-700">{isMacLike ? '⌘-enter' : 'ctrl-enter'}</span>
+            </div>
+          )}
+          {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success || !answers.hasOwnProperty(questionIdx) || !answers[questionIdx].hasOwnProperty('result') || answers[questionIdx].result === 'True' ? (
+            null
+          ) : (
+            <p className="mt-8 md:mt-10 text-white font-mono text-yellow-200">{answers[questionIdx].result}</p>
           )}
         </div>
+      </div>
+      <div className={'px-8 py-10 md:px-12 md:py-16 text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
+        {questionIdx > 0 ? (
+          <button onClick={e => updateQuestion(e, false)} className="py-2 text-black text-lg font-medium">&larr; Back </button>
+        ) : null}
+        {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success && questionIdx < questions.length - 1 ? (
+          <button onClick={e => updateQuestion(e, true)} className="px-3 py-2 bg-green-300 text-black text-lg font-semibold rounded shadow-md">Next question &rarr;</button>
+        ) : null}
       </div>
     </>
   )
