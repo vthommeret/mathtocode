@@ -4,7 +4,7 @@ import { InlineMath, BlockMath } from 'react-katex'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import Head from 'next/head'
-import testCode, { preloadWorker } from '../components/code'
+import checkAnswer, { preloadWorker } from '../lib/answer'
 
 const EQUAL = 'equal'
 const NOT_EQUAL = 'not_equal'
@@ -60,7 +60,7 @@ const Home = ({ isMacLike }) => {
 
   const answerTextarea = useRef()
 
-  // Submit code on cmd/ctrl-enter
+  // Submit answer on cmd/ctrl-enter
   useEffect(() => {
     const eventName = 'keydown'
     const listener = e => {
@@ -71,7 +71,7 @@ const Home = ({ isMacLike }) => {
             if (answers.hasOwnProperty(questionIdx) && answers[questionIdx].success) {
               updateQuestion(e, true)
             } else {
-              testAndDisplayCode()
+              testAndDisplayAnswer()
             }
             break
           case 'Backspace':
@@ -87,7 +87,7 @@ const Home = ({ isMacLike }) => {
     }
   })
 
-  const testAndDisplayCode = () => {
+  const testAndDisplayAnswer = () => {
     if (!answers.hasOwnProperty(questionIdx) || answers[questionIdx].code === '') {
       return
     }
@@ -100,7 +100,7 @@ const Home = ({ isMacLike }) => {
       }
     })
     
-    testCode(answers[questionIdx].code, questions[questionIdx])
+    checkAnswer(answers[questionIdx].code, questions[questionIdx])
       .then(res => {
         setAnswers({
           ...answers,
@@ -141,7 +141,7 @@ const Home = ({ isMacLike }) => {
 
   const submitAnswer = e => {
     e.preventDefault()
-    testAndDisplayCode()
+    testAndDisplayAnswer()
   }
 
   const updateAnswer = e => {
