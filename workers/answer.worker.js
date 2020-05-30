@@ -26,8 +26,7 @@ const checkAnswer = (answer, params, assertion, solution) => {
   answer = answer.match(/[^\r\n]+/g).length === 1 ? `return ${answer}` : answer;
 
   // Create executable function
-  const answerStr = `(${paramsStr}, tf) => { ${answer}; }`
-  const answerFn = Function(`return ${answerStr};`)()
+  const answerFn = Function.apply(null, [...params, 'tf', answer])
 
   // Run function
   const res = answerFn.apply(null, [...tensors, tf])
