@@ -31,8 +31,9 @@ const testCode = (code, params, assertion, solution) => {
   // Run function
   var res = fn.apply(null, [...tensors, tf])
 
-  if (res.constructor.name !== 'Tensor') {
-    throw 'Result must be tf.tensor'
+  const expectedClass = 'Tensor'
+  if (res.constructor.name !== expectedClass) {
+    throw `Result must be ${expectedClass}, not ${res.constructor.name}`
   }
 
   // Create solution function / expected value
