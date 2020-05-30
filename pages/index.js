@@ -51,7 +51,7 @@ const questions = [
   },
 ]
 
-const Home = ({ isMacLike }) => {
+const Home = () => {
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
 
@@ -179,7 +179,7 @@ const Home = ({ isMacLike }) => {
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? null : (
             <div>
               <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded disabled:opacity-50" disabled={!answers.hasOwnProperty(questionIdx) || (answers[questionIdx].code === '') || answers[questionIdx].loading}>{answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading ? 'Loading…' : 'Submit answer'}</button>
-              <span className="ml-2 text-sm text-gray-700 hidden md:inline">{isMacLike ? '⌘-enter' : 'ctrl-enter'}</span>
+              <span className="ml-2 text-sm text-gray-700 hidden md:inline">⌘-enter</span>
             </div>
           )}
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success || !answers.hasOwnProperty(questionIdx) || !answers[questionIdx].hasOwnProperty('result') || answers[questionIdx].result === 'True' ? (
@@ -193,12 +193,12 @@ const Home = ({ isMacLike }) => {
         {questionIdx > 0 ? (
           <div>
             <button onClick={e => updateQuestion(e, false)} className="-mx-3 px-3 py-2 text-black text-lg font-medium rounded subtle">&larr; Back </button>
-            <span className="ml-5 text-sm text-gray-700 hidden md:inline">{isMacLike ? '⌘-del' : 'ctrl-del'}</span>
+            <span className="ml-5 text-sm text-gray-700 hidden md:inline">⌘-del</span>
           </div>
         ) : null}
         {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success && questionIdx < questions.length - 1 ? (
           <div>
-            <span className="mr-2 text-sm text-gray-700 hidden md:inline">{isMacLike ? '⌘-enter' : 'ctrl-enter'}</span>
+            <span className="mr-2 text-sm text-gray-700 hidden md:inline">⌘-enter</span>
             <button onClick={e => updateQuestion(e, true)} className="px-3 py-2 bg-green-300 text-black text-lg font-semibold rounded shadow-md">Next question &rarr;</button>
           </div>
         ) : null}
@@ -207,11 +207,5 @@ const Home = ({ isMacLike }) => {
   )
 }
 
-export const getServerSideProps = async ctx => {
-  const ua = process.browser ? navigator.userAgent : ctx.req.headers['user-agent']
-  return { props: {
-    isMacLike: /(Mac|iPhone|iPod|iPad)/i.test(ua)
-  }}
-}
 
 export default Home
