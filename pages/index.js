@@ -178,7 +178,7 @@ const Home = ({ isMacLike }) => {
             <span>Code</span>
             {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? <span className="text-lg"><span className="text-green-300">✓</span> Success</span> : null}
           </h2>
-          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} ref={answerTextarea} spellCheck={false} autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="w-full mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
+          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} ref={answerTextarea} spellCheck={false} autoCapitalize='none' autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="w-full mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? null : (
             <div>
               <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded disabled:opacity-50" disabled={!answers.hasOwnProperty(questionIdx) || (answers[questionIdx].code === '') || answers[questionIdx].loading}>{answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading ? 'Loading…' : 'Submit answer'}</button>
