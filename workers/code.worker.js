@@ -31,9 +31,8 @@ const testCode = (code, params, assertion, solution) => {
   // Run function
   var res = fn.apply(null, [...tensors, tf])
 
-  const expectedClass = 'Tensor'
-  if (Object.getPrototypeOf(res).constructor.name !== expectedClass) {
-    throw `Result must be ${expectedClass}, not ${res.constructor.name}`
+  if (typeof res.dataSync === 'undefined') {
+    throw 'Result must be Tensor'
   }
 
   // Create solution function / expected value
