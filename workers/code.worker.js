@@ -32,7 +32,7 @@ const testCode = (code, params, assertion, solution) => {
   var res = fn.apply(null, [...tensors, tf])
 
   const expectedClass = 'Tensor'
-  if (res.constructor.name !== expectedClass) {
+  if (Object.getPrototypeOf(res).constructor.name !== expectedClass) {
     throw `Result must be ${expectedClass}, not ${res.constructor.name}`
   }
 
