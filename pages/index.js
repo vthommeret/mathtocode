@@ -58,7 +58,7 @@ const Home = () => {
   const answerTextarea = useRef()
 
   // Submit answer on cmd/ctrl-enter
- useEffect(() => {
+  useEffect(() => {
     const eventName = 'keydown'
     const listener = e => {
       if (e.ctrlKey || e.metaKey) {
