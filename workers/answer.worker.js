@@ -31,7 +31,7 @@ const checkAnswer = (answer, params, test, solution) => {
   }
 
   // Create solution function / expected value
-  const solutionFn = Function(`return ${solution}`)()
+  const solutionFn = Function.apply(null, [...params, `return ${solution}`])
   const expected = solutionFn.apply(null, tensors)
 
   // Determine if all elements equal expected value

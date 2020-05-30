@@ -8,50 +8,7 @@ import checkAnswer, { preloadWorker } from '../lib/answer'
 
 const m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
-const questions = [
-  {
-    math: '\\sqrt{x}',
-    params: ['x'],
-    solution: x => { return x.sqrt() },
-    tests: [
-      [25]
-    ],
-  },
-  {
-    math: '|x|',
-    params: ['x'],
-    solution: x => { return x.abs() },
-    tests: [
-      [-5],
-    ],
-  },
-  {
-    math: '2x',
-    params: ['x'],
-    solution: x => { return x.mul(2) },
-    tests: [
-      [5],
-    ],
-  },
-  {
-    math: 'x^y',
-    params: ['x', 'y'],
-    solution: (x, y) => { return x.pow(y) },
-    tests: [
-      [5, 2],
-    ],
-  },
-  {
-    math: '\\| m \\|_F = \\left( \\sum_{i,j=1}^n | m_{ij} |^2 \\right)^{1/2}',
-    params: ['m'],
-    solution: m => { return m.square().sum().sqrt() },
-    tests: [
-      [m],
-    ],
-  },
-]
-
-const Home = () => {
+const Home = ({ questions }) => {
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
 
@@ -166,7 +123,7 @@ const Home = () => {
             <span className="text-lg">{questionIdx + 1} <span className="text-gray-500">/ {questions.length}</span></span>
           </h2>
           <div className="mb-8 md:mb-10 text-lg">
-            <InlineMath math={questions[questionIdx].math} />
+            <div dangerouslySetInnerHTML={{ __html: questions[questionIdx].html }} />
           </div>
         </div>
 
@@ -207,5 +164,34 @@ const Home = () => {
   )
 }
 
+import path from 'path'
+import fs from 'fs'
+
+import matter from 'gray-matter'
+import remark from 'remark'
+import remarkHtml from 'remark-html'
+import katex from 'katex'
+
+export const getStaticProps = async () => {
+  const mathRe = /\bmath`([^`]+)`/g
+
+  const dir = path.join(process.cwd(), 'questions')
+  const docs = fs.readdirSync(dir)
+
+  const questions = docs.map(doc => {
+    const filename = path.join(dir, doc)
+    const content = fs.readFileSync(filename, 'utf8')
+    const { data, content: markdown } = matter(content)
+    const markdownMath = markdown.replace(mathRe, (_, math) => {
+      return katex.renderToString(math)
+    })
+    const html = remark().use(remarkHtml).processSync(markdownMath).toString()
+    return {doc, params: data.params, solution: data.solution, tests: data.tests, html}
+  })
+
+  return {
+    props: { questions }
+  }
+}
 
 export default Home
