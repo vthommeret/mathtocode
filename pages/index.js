@@ -6,9 +6,6 @@ import TextareaAutosize from 'react-textarea-autosize'
 import Head from 'next/head'
 import checkAnswer, { preloadWorker } from '../lib/answer'
 
-const EQUAL = 'equal'
-const NOT_EQUAL = 'not_equal'
-
 const m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 const questions = [
@@ -16,40 +13,40 @@ const questions = [
     math: '\\sqrt{x}',
     params: ['x'],
     solution: x => { return x.sqrt() },
-    assertions: [
-      {type: EQUAL, args: [25]},
+    tests: [
+      [25]
     ],
   },
   {
     math: '|x|',
     params: ['x'],
     solution: x => { return x.abs() },
-    assertions: [
-      {type: EQUAL, args: [-5]},
+    tests: [
+      [-5],
     ],
   },
   {
     math: '2x',
     params: ['x'],
     solution: x => { return x.mul(2) },
-    assertions: [
-      {type: EQUAL, args: [5]},
+    tests: [
+      [5],
     ],
   },
   {
     math: 'x^y',
     params: ['x', 'y'],
     solution: (x, y) => { return x.pow(y) },
-    assertions: [
-      {type: EQUAL, args: [5, 2]},
+    tests: [
+      [5, 2],
     ],
   },
   {
     math: '\\| m \\|_F = \\left( \\sum_{i,j=1}^n | m_{ij} |^2 \\right)^{1/2}',
     params: ['m'],
     solution: m => { return m.square().sum().sqrt() },
-    assertions: [
-      {type: EQUAL, args: [m]},
+    tests: [
+      [m],
     ],
   },
 ]
@@ -61,7 +58,7 @@ const Home = ({ isMacLike }) => {
   const answerTextarea = useRef()
 
   // Submit answer on cmd/ctrl-enter
-  useEffect(() => {
+ useEffect(() => {
     const eventName = 'keydown'
     const listener = e => {
       if (e.ctrlKey || e.metaKey) {
