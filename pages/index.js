@@ -114,22 +114,15 @@ const Home = ({ questions }) => {
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
       </Head>
 
-      <div className="container-shadow md:max-w-screen-md md:mt-10 md:flex md:mx-auto">
+      <div className="container-shadow md:max-w-screen-lg md:mt-10 md:flex md:mx-auto">
         <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-1/2">
-          <h2 className="mb-8 md:mb-10 text-2xl font-medium flex justify-between items-center">
-            <span>Math</span>
+          <div className="markdown mb-8 md:mb-10 text-lg" dangerouslySetInnerHTML={{ __html: questions[questionIdx].html }} />
+          <p className="text-2xl font-medium">
             <span className="text-lg">{questionIdx + 1} <span className="text-gray-500">/ {questions.length}</span></span>
-          </h2>
-          <div className="mb-8 md:mb-10 text-lg">
-            <div dangerouslySetInnerHTML={{ __html: questions[questionIdx].html }} />
-          </div>
+          </p>
         </div>
 
         <div className="px-8 py-10 md:px-12 md:py-16 bg-black text-white md:flex-1">
-          <h2 className="mb-8 md:mb-10 text-2xl font-medium flex justify-between items-center">
-            <span>Code</span>
-            {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? <span className="text-lg"><span className="text-green-300">✓</span> Success</span> : null}
-          </h2>
           <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} ref={answerTextarea} spellCheck={false} autoCapitalize='none' autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="w-full mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? null : (
             <div>
@@ -142,9 +135,16 @@ const Home = ({ questions }) => {
           ) : (
             <p className="mt-8 md:mt-10 text-white font-mono text-yellow-200">{answers[questionIdx].result}</p>
           )}
+
+          {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? (
+            <p className="mb-8 md:mb-10 text-2xl font-medium leading-none">
+              <span className="text-lg"><span className="text-green-300">✓</span> Success</span>
+            </p>
+          ) : null}
+
         </div>
       </div>
-      <div className={'px-8 py-10 md:px-12 md:py-10 md:max-w-screen-md md:mx-auto text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
+      <div className={'px-8 py-10 md:px-12 md:py-10 md:max-w-screen-lg md:mx-auto text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
         {questionIdx > 0 ? (
           <div>
             <button onClick={e => updateQuestion(e, false)} className="-mx-3 px-3 py-2 text-black text-lg font-medium rounded subtle">&larr; Back </button>

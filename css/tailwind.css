@@ -18,5 +18,18 @@ button.subtle:hover {
   background: rgba(255, 255, 255, 0.15);
 }
 
+.markdown blockquote {
+  @apply italic;
+}
+.markdown p {
+  @apply mb-4 leading-relaxed;
+}
+.markdown .caption {
+  @apply text-sm leading-normal text-gray-600 font-medium;
+}
+.markdown strong {
+  @apply font-semibold;
+}
+
 @tailwind components;
 @tailwind utilities;
