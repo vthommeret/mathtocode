@@ -6,8 +6,6 @@ import TextareaAutosize from 'react-textarea-autosize'
 import Head from 'next/head'
 import checkAnswer, { preloadWorker } from '../lib/answer'
 
-const m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-
 const Home = ({ questions }) => {
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
