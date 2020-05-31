@@ -8,4 +8,4 @@ tests: [
 ]
 ---
 
-math`\| m \|_F = \left( \sum_{i,j=1}^n | m_{ij} |^2 \right)^{1/2}`
+math`\| m \|_F = \left( \sum_{i,j=1}^n {m_{ij}}^2 \right)^{1/2}`
