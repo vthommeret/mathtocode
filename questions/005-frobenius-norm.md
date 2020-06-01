@@ -1,6 +1,6 @@
 ---
 params: [m]
-solution: m.square().sum().sqrt()
+solution: np.sqrt((m ** 2).sum())
 tests: [
   [
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]

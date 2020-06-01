@@ -174,7 +174,7 @@ export const getStaticProps = async () => {
   const mathRe = /\bmath`([^`]+)`/g
 
   const dir = path.join(process.cwd(), 'questions')
-  const docs = fs.readdirSync(dir)
+  const docs = fs.readdirSync(dir).sort()
 
   const questions = docs.map(doc => {
     const filename = path.join(dir, doc)

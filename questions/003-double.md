@@ -1,6 +1,6 @@
 ---
 params: [x]
-solution: x.mul(2)
+solution: x * 2
 tests: [
   [5]
 ]

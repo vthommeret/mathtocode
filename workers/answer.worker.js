@@ -1,42 +1,52 @@
-import * as tfjs from '@tensorflow/tfjs'
+import { initPython, runPython } from '../lib/python'
 
-onmessage = e => {
-  const answer = e.data[0];
-  const params = e.data[1];
-  const tests = e.data[2];
-  const solution = e.data[3];
-  const res = checkAnswer(answer, params, tests[0], solution);
-  postMessage(res)
-}
+(() => {
+  const imports = {np: 'numpy'}
 
-const checkAnswer = (answer, params, test, solution) => {
-  // Imported TensorFlow isn't available for some reason with out aliasing
-  const tf = tfjs;
+  initPython()
 
-  // Parameters and arguments
-  const paramsStr = params.join(', ')
-  const tensors = test.map(arg => { return tf.tensor(arg) })
+  onmessage = e => {
+    const answer = e.data[0];
+    const params = e.data[1];
+    const tests = e.data[2];
+    const solution = e.data[3];
 
-  // Add 'return' to single-line answer
-  answer = answer.match(/[^\r\n]+/g).length === 1 ? `return ${answer}` : answer;
+    const args = {}
+    params.forEach((param, i) => args[param] = tests[0][i])
 
-  // Create executable function
-  const answerFn = Function.apply(null, [...params, 'tf', answer])
-
-  // Run function
-  const res = answerFn.apply(null, [...tensors, tf])
-
-  if (typeof res.dataSync === 'undefined') {
-    throw 'Result must be Tensor'
+    checkAnswer(answer, solution, args)
+      .then(res => {
+        postMessage({success: res})
+      })
+      .catch(err => {
+        console.log(err)
+        postMessage({error: err.toString()})
+      })
   }
 
-  // Create solution function / expected value
-  const solutionFn = Function.apply(null, [...params, `return ${solution}`])
-  const expected = solutionFn.apply(null, tensors)
+  const checkAnswer = (answer, solution, args) => {
+    return runPython(answer, args, imports)
+      .then(([pyAnswer, jsAnswer]) => {
 
-  // Determine if all elements equal expected value
-  const els = res.dataSync().length
-  const truths = res.equal(expected).sum().dataSync()[0]
+        return runPython(solution, args, imports)
+          .then(([pySolution, jsSolution]) => {
 
-  return els === truths
-}
+            const answerType = pyAnswer.tp$name
+            const solutionType = pySolution.tp$name
+
+            if (answerType !== solutionType) {
+              throw `Answer type (${answerType}) doesn't match solution type (${solutionType})` 
+            }
+
+            switch (answerType) {
+              case 'float': case 'int':
+                return jsAnswer === jsSolution
+              case 'np.ndarray':
+                console.log('numpy', answerType)
+                break
+            }
+          })
+
+      })
+  }
+})()
