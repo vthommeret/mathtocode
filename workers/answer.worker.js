@@ -11,12 +11,10 @@ import { initPython, runPython } from '../lib/python'
     const tests = e.data[2];
     const solution = e.data[3];
 
-    const args = {}
-    params.forEach((param, i) => args[param] = tests[0][i])
-
-    checkAnswer(answer, solution, args)
+    checkAnswer(answer, solution, params, tests)
       .then(res => {
-        postMessage({success: res})
+        const successes = res.reduce((acc, v) => acc + v, 0)
+        postMessage({success: res.length === successes})
       })
       .catch(err => {
         console.log(err)
@@ -24,29 +22,35 @@ import { initPython, runPython } from '../lib/python'
       })
   }
 
-  const checkAnswer = (answer, solution, args) => {
-    return runPython(answer, args, imports)
-      .then(([pyAnswer, jsAnswer]) => {
+  const checkAnswer = (answer, solution, params, tests) => {
+    const results = tests.map(test => {
+      const args = {}
+      params.forEach((param, i) => args[param] = test[i])
 
-        return runPython(solution, args, imports)
-          .then(([pySolution, jsSolution]) => {
+      return runPython(answer, args, imports)
+        .then(([pyAnswer, jsAnswer]) => {
 
-            const answerType = pyAnswer.tp$name
-            const solutionType = pySolution.tp$name
+          return runPython(solution, args, imports)
+            .then(([pySolution, jsSolution]) => {
 
-            if (answerType !== solutionType) {
-              throw `Answer type (${answerType}) doesn't match solution type (${solutionType})` 
-            }
+              const answerType = pyAnswer.tp$name
+              const solutionType = pySolution.tp$name
 
-            switch (answerType) {
-              case 'float': case 'int':
-                return jsAnswer === jsSolution
-              case 'np.ndarray':
-                console.log('numpy', answerType)
-                break
-            }
-          })
+              if (answerType !== solutionType) {
+                throw `Answer type (${answerType}) doesn't match solution type (${solutionType})`
+              }
 
-      })
+              switch (answerType) {
+                case 'float': case 'int':
+                  return jsAnswer === jsSolution
+                case 'np.ndarray':
+                  console.log('numpy', answerType)
+                  break
+              }
+            })
+
+        })
+    })
+    return Promise.all(results)
   }
 })()
