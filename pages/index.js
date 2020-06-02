@@ -3,10 +3,16 @@ import { useState, useEffect, useRef } from 'react'
 import { InlineMath, BlockMath } from 'react-katex'
 import TextareaAutosize from 'react-textarea-autosize'
 
+import Editor from 'react-simple-code-editor'
+import { highlight, languages } from 'prismjs/components/prism-core'
+import 'prismjs/components/prism-python'
+
 import Head from 'next/head'
 import checkAnswer, { preloadWorker } from '../lib/answer'
 
 const Home = ({ questions }) => {
+  Prism.languages.python.function.pattern = /\b[a-zA-Z_]\w*(?=\s*\()/g
+
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
 
@@ -64,7 +70,7 @@ const Home = ({ questions }) => {
           }
         })
         if (res) {
-          answerTextarea.current.blur()
+          answerTextarea.current._input.blur()
         }
       })
       .catch(msg => {
@@ -86,7 +92,7 @@ const Home = ({ questions }) => {
       const newQuestionIdx = questionIdx + (increment ? 1 : -1)
       setQuestionIdx(newQuestionIdx)
       if (!answers.hasOwnProperty(newQuestionIdx) || !answers[newQuestionIdx].success) {
-        answerTextarea.current.focus()
+        answerTextarea.current._input.focus()
       }
     }
   }
@@ -96,10 +102,10 @@ const Home = ({ questions }) => {
     testAndDisplayAnswer()
   }
 
-  const updateAnswer = e => {
+  const updateAnswer = code => {
     setAnswers({
       ...answers,
-      [questionIdx]: {code: e.target.value}
+      [questionIdx]: {code: code}
     })
   }
 
@@ -123,7 +129,9 @@ const Home = ({ questions }) => {
         </div>
 
         <div className="px-8 py-10 md:px-12 md:py-16 bg-black text-white md:flex-1">
-          <TextareaAutosize value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." onChange={updateAnswer} ref={answerTextarea} spellCheck={false} autoCapitalize='none' autoFocus disabled={answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading} className="w-full mb-8 md:mb-10 bg-transparent placeholder-gray-700 outline-none resize-none font-mono disabled:opacity-50" />
+
+          <Editor disabled={true} ref={answerTextarea} value={answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : ''} placeholder="Enter code..." highlight={code => highlight(answers.hasOwnProperty(questionIdx) ? answers[questionIdx].code : '', languages.python)} onValueChange={updateAnswer} autoFocus className="mb-8 md:mb-10 bg-transparent placeholder-gray-700 font-mono disabled:opacity-50" />
+
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? null : (
             <div>
               <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded disabled:opacity-50" disabled={!answers.hasOwnProperty(questionIdx) || (answers[questionIdx].code === '') || answers[questionIdx].loading}>{answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading ? 'Loading…' : 'Submit answer'}</button>
