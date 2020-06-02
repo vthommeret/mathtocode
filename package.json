@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.2.0",
-    "@tensorflow/tfjs": "^2.0.0",
     "@zeit/next-workers": "^1.0.0",
     "autoprefixer": "^9.8.0",
     "gray-matter": "^4.0.2",
