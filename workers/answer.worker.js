@@ -13,8 +13,7 @@ import { initPython, runPython } from '../lib/python'
 
     checkAnswer(answer, solution, params, tests)
       .then(res => {
-        const successes = res.reduce((acc, v) => acc + v, 0)
-        postMessage({success: res.length === successes})
+        postMessage({success: res})
       })
       .catch(err => {
         console.log(err)
@@ -23,34 +22,33 @@ import { initPython, runPython } from '../lib/python'
   }
 
   const checkAnswer = (answer, solution, params, tests) => {
-    const results = tests.map(test => {
-      const args = {}
-      params.forEach((param, i) => args[param] = test[i])
+    return runPython(answer, params, tests, imports)
+      .then(([pyAnswer, jsAnswer]) => {
+        return runPython(solution, params, tests, imports)
+          .then(([pySolution, jsSolution]) => {
+            if (jsSolution.length !== jsAnswer.length) {
+              throw "Solution result length don't match answer results"
+            }
 
-      return runPython(answer, args, imports)
-        .then(([pyAnswer, jsAnswer]) => {
+            const answerType = pyAnswer.v[0].tp$name
+            const solutionType = pySolution.v[0].tp$name
 
-          return runPython(solution, args, imports)
-            .then(([pySolution, jsSolution]) => {
+            if (answerType !== solutionType) {
+              throw `Answer type (${answerType}) doesn't match solution type (${solutionType})`
+            }
 
-              const answerType = pyAnswer.tp$name
-              const solutionType = pySolution.tp$name
+            let success = true
 
-              if (answerType !== solutionType) {
-                throw `Answer type (${answerType}) doesn't match solution type (${solutionType})`
-              }
-
-              switch (answerType) {
-                case 'float': case 'int':
-                  return jsAnswer === jsSolution
-                case 'np.ndarray':
-                  console.log('numpy', answerType)
-                  break
+            jsSolution.forEach((res, i) => {
+              if (res !== jsAnswer[i]) {
+                success = false
               }
             })
 
-        })
-    })
-    return Promise.all(results)
+            return success
+          })
+
+      })
   }
+
 })()
