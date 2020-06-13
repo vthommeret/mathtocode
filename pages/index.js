@@ -150,23 +150,25 @@ const Home = ({ questions }) => {
 
         </div>
       </div>
-      <div className={'px-8 pt-10 md:px-12 md:max-w-screen-lg md:mx-auto text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
-        {questionIdx > 0 ? (
-          <div>
-            <button onClick={e => updateQuestion(e, false)} className="-mx-3 px-3 py-2 text-black text-lg font-medium rounded subtle">&larr; Back </button>
-            <span className="ml-5 text-sm text-gray-700 hidden md:inline">⌘-del</span>
-          </div>
-        ) : null}
-        {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success && questionIdx < questions.length - 1 ? (
-          <div>
-            <span className="mr-2 text-sm text-gray-700 hidden md:inline">⌘-enter</span>
-            <button onClick={e => updateQuestion(e, true)} className="px-3 py-2 bg-green-300 text-black text-lg font-semibold rounded shadow-md">Next question &rarr;</button>
-          </div>
-        ) : null}
-      </div>
-      <div className={'px-8 py-10 md:px-12 md:max-w-screen-lg md:mx-auto text-xs leading-relaxed'}>
-        <p>Built by <a href="https://thommeret.com" target="_blank">Vernon Thommeret</a></p>
-        <p>Open source at <a href="https://github.com/vthommeret/mathtocode" target="_blank">github.com/vthommeret/mathtocode</a></p>
+      <div className={'px-8 pt-10 md:px-12 md:max-w-screen-lg md:mx-auto'}>
+        <div className={'text-center flex ' + (questionIdx > 0 ? 'justify-between' : 'justify-end')}>
+          {questionIdx > 0 ? (
+            <div className={'mb-8'}>
+              <button onClick={e => updateQuestion(e, false)} className="-mx-3 px-3 py-2 text-black text-lg font-medium rounded subtle">&larr; Back </button>
+              <span className="ml-5 text-sm text-gray-700 hidden md:inline">⌘-del</span>
+            </div>
+          ) : null}
+          {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success && questionIdx < questions.length - 1 ? (
+            <div className={'mb-8'}>
+              <span className="mr-2 text-sm text-gray-700 hidden md:inline">⌘-enter</span>
+              <button onClick={e => updateQuestion(e, true)} className="px-3 py-2 bg-green-300 text-black text-lg font-semibold rounded shadow-md">Next question &rarr;</button>
+            </div>
+          ) : null}
+        </div>
+        <div className={'text-xs leading-relaxed'}>
+          <p>Open source at <a href="https://github.com/vthommeret/mathtocode" target="_blank">github.com/vthommeret/mathtocode</a></p>
+          <p>Built by <a href="https://thommeret.com" target="_blank">Vernon Thommeret</a></p>
+        </div>
       </div>
     </>
   )
