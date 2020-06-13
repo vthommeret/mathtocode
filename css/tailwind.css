@@ -30,6 +30,9 @@ button.subtle:hover {
 .markdown strong {
   @apply font-semibold;
 }
+.markdown code {
+  @apply text-green-600 text-base;
+}
 
 @tailwind components;
 @tailwind utilities;
