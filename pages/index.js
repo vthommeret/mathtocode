@@ -109,6 +109,15 @@ const Home = ({ questions }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169337965-1"></script>
+        <script dangerouslySetInnerHTML={
+            { __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag("js", new Date());
+            gtag("config", 'UA-169337965-1');
+          `}
+        } />
       </Head>
 
       <div className="container-shadow md:max-w-screen-lg md:mt-10 md:flex md:mx-auto">
