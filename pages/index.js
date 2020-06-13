@@ -163,6 +163,7 @@ const Home = ({ questions }) => {
         <div className={'text-xs leading-relaxed'}>
           <p>Open source at <a href="https://github.com/vthommeret/mathtocode" target="_blank">github.com/vthommeret/mathtocode</a></p>
           <p>Built by <a href="https://thommeret.com" target="_blank">Vernon Thommeret</a></p>
+          <p>Discuss on <a href="https://news.ycombinator.com/item?id=23513438" target="_blank">Hacker News</a></p>
         </div>
       </div>
     </>
