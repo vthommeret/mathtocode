@@ -2,6 +2,8 @@
 
 Math to Code is an interactive Python tutorial to teach engineers how to read and implement math using the NumPy library.
 
+<img width="640" alt="mathtocode" src="https://user-images.githubusercontent.com/42359/84580150-56c0bb00-ada2-11ea-8a72-cd461d3bb4fe.png">
+
 ## Running dev server
 
 `npm run dev`
