@@ -12,3 +12,5 @@ Another common operation is multiplying each value in a vector or matrix. This l
 math`\prod_{i,j=1}^n 3*{m_{ij}}`
 
 The Π symbol is a capital π symbol, pronounced "pi". Implement this equation similarly using the `prod` function. Note that the matrix first element-wise multiplied by 3.
+
+**Tip:** Make sure to group values where appropriate with parentheses.
