@@ -12,25 +12,20 @@ const Home = ({ questions }) => {
 
   const answerTextarea = useRef()
 
-  // Submit answer on cmd/ctrl-enter
+  // Submit answer on enter
   useEffect(() => {
     const eventName = 'keydown'
     const listener = e => {
-      if (e.ctrlKey || e.metaKey) {
-        switch (e.key) {
-          case 'Enter':
-            e.preventDefault()
-            if (answers.hasOwnProperty(questionIdx) && answers[questionIdx].success) {
-              updateQuestion(e, true)
-            } else {
-              testAndDisplayAnswer()
-            }
-            break
-          case 'Backspace':
-            e.preventDefault()
-            updateQuestion(e, false)
-            break
-        }
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Backspace') {
+          e.preventDefault()
+          updateQuestion(e, false)
+      } else if (e.key === 'Enter') {
+          e.preventDefault()
+          if (answers.hasOwnProperty(questionIdx) && answers[questionIdx].success) {
+            updateQuestion(e, true)
+          } else {
+            testAndDisplayAnswer()
+          }
       }
     }
     window.addEventListener(eventName, listener)
@@ -133,7 +128,7 @@ const Home = ({ questions }) => {
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? null : (
             <div>
               <button onClick={submitAnswer} className="px-2 py-1 bg-green-300 text-black font-medium rounded disabled:opacity-50" disabled={!answers.hasOwnProperty(questionIdx) || (answers[questionIdx].code === '') || answers[questionIdx].loading}>{answers.hasOwnProperty(questionIdx) && answers[questionIdx].loading ? 'Loading…' : 'Submit answer'}</button>
-              <span className="ml-2 text-sm text-gray-700 hidden md:inline">⌘-enter</span>
+              <span className="ml-2 text-sm text-gray-700 hidden md:inline">enter</span>
             </div>
           )}
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success || !answers.hasOwnProperty(questionIdx) || !answers[questionIdx].hasOwnProperty('result') || answers[questionIdx].result === 'True' ? (
@@ -160,7 +155,7 @@ const Home = ({ questions }) => {
           ) : null}
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success && questionIdx < questions.length - 1 ? (
             <div className={'mb-8'}>
-              <span className="mr-2 text-sm text-gray-700 hidden md:inline">⌘-enter</span>
+              <span className="mr-2 text-sm text-gray-700 hidden md:inline">enter</span>
               <button onClick={e => updateQuestion(e, true)} className="px-3 py-2 bg-green-300 text-black text-lg font-semibold rounded shadow-md">Next question &rarr;</button>
             </div>
           ) : null}
