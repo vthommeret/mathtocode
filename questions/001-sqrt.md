@@ -7,7 +7,7 @@ tests:
   - [5]
 ---
 
-**Math to Code** is an interactive NumPy tutorial to teach engineers how to read and implement math using the NumPy library.
+**Math to Code** is an interactive Python tutorial to teach engineers how to read and implement math using the NumPy library.
 
 Let’s get started! Implement the square root function:
 
