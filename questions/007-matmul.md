@@ -3,7 +3,7 @@ params: [a, b]
 solution: a.dot(b)
 tests:
   - [ [[1, 2, 3], [4, 5, 6]], [[7, 8], [9, 10], [11, 12]] ]
-  - [ [[10], [4]], [14, 12] ]
+  - [ [14, 12], [[10], [4]] ]
 ---
 
 In addition to multiplying vectors and matrices by single numbers, you can multiply matrices by other matrices. For example, for two matrices `a` and `b`:

@@ -11,4 +11,4 @@ Good job! Now let's implement something known as the Frobenius norm:
 
 math`\| m \|_F = \left( \sum_{i,j=1}^n {m_{ij}}^2 \right)^{1/2}`
 
-Hint: You can implement this a number of ways, using operators (`**`), functions (`np.sqrt`), and methods (`.sum`).
+**Hint:** You can implement this a number of ways, using operators (`**`), functions (`np.sqrt`), and methods (`.sum`).

@@ -1,6 +1,6 @@
 ---
 params: [m]
-solution: m.prod()
+solution: (m*3).prod()
 tests:
   - [ [50] ]
   - [ [10, 20, 30] ]
