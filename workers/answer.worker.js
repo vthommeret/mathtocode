@@ -1,5 +1,9 @@
 import { initPython, runPython } from '../lib/python'
 
+const flatNpArray = npArray => {
+  return npArray.buffer.map(x => x.v)
+}
+
 (() => {
   const imports = {np: 'numpy'}
 
@@ -30,8 +34,17 @@ import { initPython, runPython } from '../lib/python'
         let success = true
 
         jsSolution.forEach((res, i) => {
-          if (res !== jsAnswer[i]) {
+          let correct = true
+          if (answerType === 'numpy.ndarray') {
+            const solution = flatNpArray(res)
+            const answer = flatNpArray(jsAnswer[i])
+            correct = solution.reduce((a, x, j) => a + (x === answer[j] ? 1 : 0), 0)
+          } else {
+            correct = (res === jsAnswer[i])
+          }
+          if (!correct) {
             success = false
+            return
           }
         })
 
