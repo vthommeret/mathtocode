@@ -7,4 +7,4 @@ tests:
   - [ [[1, 2, 3], [4, 5, 6], [7, 8, 9]] ]
 ---
 
-Congratulations! Now you can implement a significant amount of math in papers — exponentation, matrix multiplication, summations, products, and common measures like arithmetic means, norms, and standard deviations.
+**Congratulations!** Now you can implement a significant amount of math in papers — exponentation, matrix multiplication, summations, products, and common measures like arithmetic means, norms, and standard deviations.
