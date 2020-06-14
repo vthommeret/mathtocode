@@ -156,7 +156,7 @@ const Home = ({ questions }) => {
           )}
 
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? (
-            <p className="mb-8 md:mb-10 text-2xl font-medium leading-none">
+            <p className="text-2xl font-medium leading-none">
               <span className="text-lg"><span className="text-green-300">✓</span> Success</span>
             </p>
           ) : null}
