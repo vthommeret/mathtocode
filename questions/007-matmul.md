@@ -20,7 +20,7 @@ math`a \cdot b`
 
 When you compute the dot product of two matrices, the elements of the rows of the first matrix (a 2x3) matrix are multiplied by the elements of the columns of the second matrix (a 3x2 matrix) to end up with a 2x2 matrix:
 
-math`a = \begin{bmatrix}55 && 64 \\
-139 && 154\end{bmatrix}`
+math`a = \begin{bmatrix}50 && 68 \\
+122 && 167\end{bmatrix}`
 
 Implement the dot product using the `dot` method: `a.dot(b)`.
