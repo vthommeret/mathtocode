@@ -120,6 +120,7 @@ const Home = ({ questions }) => {
         <meta property="twitter:creator" content="Vernon Thommeret" />
         <meta property="twitter:title" content="Math to Code" />
         <meta property="twitter:description" content="Math to Code is an interactive Python tutorial to teach engineers how to read and implement math using the NumPy library." />
+        <meta property="twitter:image" content="https://mathtocode.com/images/mathtocode.png" />
 
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169337965-1"></script>
         <script dangerouslySetInnerHTML={
