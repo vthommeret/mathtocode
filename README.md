@@ -17,3 +17,4 @@
 1. [Tailwind CSS](https://github.com/tailwindcss/tailwindcss) for styling
 1. [remark](https://github.com/remarkjs/remark) for rendering Markdown questions
 1. [gray-matter](https://github.com/jonschlinkert/gray-matter) for extracting Markdown frontmatter
+1. [RealFavIconGenerator](https://realfavicongenerator.net/) for generating favicons
