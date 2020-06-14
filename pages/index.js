@@ -9,8 +9,12 @@ import checkAnswer, { preloadWorker } from '../lib/answer'
 const Home = ({ questions }) => {
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
-
   const [autofocused, setAutofocused] = useState(false)
+
+  // Right now this is global state since it's reset when changing
+  // questions, but could be moved to answers state if we wanted to
+  // persist per question
+  const [showSolution, setShowSolution] = useState(false)
 
   const answerTextarea = useRef()
 
@@ -18,7 +22,7 @@ const Home = ({ questions }) => {
 
   // Autofocus on page load
   // Somewhat roundabout since using `autoFocus` on textarea if breakpoint is mobile
-  // doesn't work with Next.js's static site generation.
+  // doesn't work with Next.js's static site generation
   useEffect(() => {
     if (!autofocused) {
       // Don't autofocus on mobile since it can cause question can go offscreen
@@ -105,6 +109,7 @@ const Home = ({ questions }) => {
           }
         }
       }
+      setShowSolution(false)
     }
   }
 
@@ -118,6 +123,11 @@ const Home = ({ questions }) => {
       ...answers,
       [questionIdx]: {code: e.target.value}
     })
+  }
+
+  const toggleSolution = e => {
+    e.preventDefault()
+    setShowSolution(!showSolution)
   }
 
   preloadWorker()
@@ -177,15 +187,22 @@ const Home = ({ questions }) => {
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success || !answers.hasOwnProperty(questionIdx) || !answers[questionIdx].hasOwnProperty('result') || answers[questionIdx].result === 'True' ? (
             null
           ) : (
-            <p className="mt-8 md:mt-10 text-white font-mono text-yellow-200">{answers[questionIdx].result}</p>
+            <p className="mt-8 md:mt-10 font-mono text-yellow-200">{answers[questionIdx].result}</p>
           )}
 
           {answers.hasOwnProperty(questionIdx) && answers[questionIdx].success ? (
             <p className="text-2xl font-medium leading-none">
               <span className="text-lg"><span className="text-green-300">✓</span> Success</span>
             </p>
-          ) : null}
-
+          ) : (
+            <>
+              <p className="pt-8 md:pt-10 text-gray-400 text-right">
+                <span className="mr-2 text-sm">Stuck?</span>
+                <button onClick={toggleSolution} className="px-2 py-1 border border-gray-400 rounded">{showSolution ? 'Hide solution' : 'Show solution'}</button>
+              </p>
+              {showSolution ? <p className="mt-6 font-mono text-right text-gray-400">{questions[questionIdx].solution}</p> : null}
+            </>
+          )}
         </div>
       </div>
       <div className={'px-8 pt-10 md:px-12 md:max-w-screen-lg md:mx-auto'}>
