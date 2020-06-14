@@ -14,6 +14,8 @@ const Home = ({ questions }) => {
 
   const answerTextarea = useRef()
 
+  const breakpoint = 'screen and (min-width: 640px)'
+
   // Submit answer on enter
   useEffect(() => {
     const eventName = 'keydown'
@@ -63,7 +65,7 @@ const Home = ({ questions }) => {
         if (res) {
           answerTextarea.current.blur()
           const opts = {disableForReducedMotion: true}
-          if (window.matchMedia('screen and (min-width: 640px)').matches) {
+          if (window.matchMedia(breakpoint).matches) {
             opts.spread = 100
           }
           confetti(opts)
@@ -87,6 +89,13 @@ const Home = ({ questions }) => {
     if (questionIdx != (increment ? questions.length - 1 : 0)) {
       const newQuestionIdx = questionIdx + (increment ? 1 : -1)
       setQuestionIdx(newQuestionIdx)
+      if (newQuestionIdx !== questions.length - 1) {
+        if (!answers.hasOwnProperty(newQuestionIdx) || !answers[newQuestionIdx].success) {
+          if (window.matchMedia(breakpoint).matches) {
+            answerTextarea.current.focus()
+          }
+        }
+      }
     }
   }
 
