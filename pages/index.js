@@ -6,6 +6,8 @@ import TextareaAutosize from 'react-textarea-autosize'
 import Head from 'next/head'
 import checkAnswer, { preloadWorker } from '../lib/answer'
 
+import confetti from 'canvas-confetti'
+
 const Home = ({ questions }) => {
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
@@ -60,6 +62,10 @@ const Home = ({ questions }) => {
         })
         if (res) {
           answerTextarea.current.blur()
+          confetti({
+            spread: 100,
+            disableForReducedMotion: true,
+          })
         }
       })
       .catch(msg => {
