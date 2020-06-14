@@ -10,10 +10,10 @@
 
 ## Credits
 
-1. Next.js for frontend framework
-1. KaTex for rendering LaTeX
-1. Skulpt for interpreting Python
-1. Skulpt NumPy for a subset of NumPy
-1. Tailwind for styling
-1. remark for rendering Markdown questions
-1. gray-matter for extracting Markdown frontmatter
+1. [Next.js](https://github.com/vercel/next.js) for frontend framework
+1. [KaTex](https://github.com/KaTeX/KaTeX) for rendering LaTeX
+1. [Skulpt](https://github.com/skulpt/skulpt) for interpreting Python
+1. [Skulpt NumPy](https://github.com/ebertmi/skulpt_numpy) for a subset of NumPy
+1. [Tailwind CSS](https://github.com/tailwindcss/tailwindcss) for styling
+1. [remark](https://github.com/remarkjs/remark) for rendering Markdown questions
+1. [gray-matter](https://github.com/jonschlinkert/gray-matter) for extracting Markdown frontmatter
