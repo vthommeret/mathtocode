@@ -13,4 +13,4 @@ math`\bar{x} = \displaystyle\frac{1}{n} \times \sum_{i=1}^n {x_{i}}`
 
 This simply means adding every element of a list and dividing the result by the number of elements in `x`. A bar over a variable refers to a type of mean.
 
-**Hint:** You can get the number of elements in an array in Numpy with `x.size`.
+**Hint:** You can get the number of elements in an array in NumPy with `x.size`.
