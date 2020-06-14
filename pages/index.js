@@ -10,9 +10,24 @@ const Home = ({ questions }) => {
   const [questionIdx, setQuestionIdx] = useState(0)
   const [answers, setAnswers] = useState({})
 
+  const [autofocused, setAutofocused] = useState(false)
+
   const answerTextarea = useRef()
 
   const breakpoint = 'screen and (min-width: 640px)'
+
+  // Autofocus on page load
+  // Somewhat roundabout since using `autoFocus` on textarea if breakpoint is mobile
+  // doesn't work with Next.js's static site generation.
+  useEffect(() => {
+    if (!autofocused) {
+      // Don't autofocus on mobile since it can cause question can go offscreen
+      if (window.matchMedia(breakpoint).matches) {
+        answerTextarea.current.focus()
+      }
+      setAutofocused(true)
+    }
+  })
 
   // Submit answer on enter
   useEffect(() => {
@@ -84,6 +99,7 @@ const Home = ({ questions }) => {
       setQuestionIdx(newQuestionIdx)
       if (newQuestionIdx !== questions.length - 1) {
         if (!answers.hasOwnProperty(newQuestionIdx) || !answers[newQuestionIdx].success) {
+          // Don't autofocus on mobile since it can cause question can go offscreen
           if (window.matchMedia(breakpoint).matches) {
             answerTextarea.current.focus()
           }
