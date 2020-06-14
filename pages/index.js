@@ -62,10 +62,11 @@ const Home = ({ questions }) => {
         })
         if (res) {
           answerTextarea.current.blur()
-          confetti({
-            spread: 100,
-            disableForReducedMotion: true,
-          })
+          const opts = {disableForReducedMotion: true}
+          if (window.matchMedia('screen and (min-width: 640px)').matches) {
+            opts.spread = 100
+          }
+          confetti(opts)
         }
       })
       .catch(msg => {
