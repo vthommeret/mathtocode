@@ -13,6 +13,6 @@ math`m = \begin{bmatrix}1 & 2 & 3 \\
 4 & 5 & 6 \\
 7 & 8 & 9\end{bmatrix}`
 
-You can similarly operate on matrices using operators you've already learned. Try squaring each element in the matrix `m`:
+You can similarly operate on matrices using operators you've already learned. Try squaring each element in the matrix math`m`:
 
 math`m ^ 2`
