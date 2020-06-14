@@ -116,7 +116,7 @@ const Home = ({ questions }) => {
         <meta property="og:description" content="Math to Code is an interactive Python tutorial to teach engineers how to read and implement math using the NumPy library." />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://mathtocode.com/images/mathtocode.png" />
-        <meta property="twitter:card" content="summary" />
+        <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:creator" content="Vernon Thommeret" />
         <meta property="twitter:title" content="Math to Code" />
         <meta property="twitter:description" content="Math to Code is an interactive Python tutorial to teach engineers how to read and implement math using the NumPy library." />
