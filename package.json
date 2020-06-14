@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.2.0",
+    "@sentry/browser": "^5.17.0",
+    "@zeit/next-source-maps": "0.0.3",
     "@zeit/next-workers": "^1.0.0",
     "autoprefixer": "^9.8.0",
     "gray-matter": "^4.0.2",
