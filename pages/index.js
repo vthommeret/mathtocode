@@ -198,7 +198,8 @@ const Home = ({ questions }) => {
             <>
               <p className="pt-8 md:pt-10 text-gray-400 text-right">
                 <span className="mr-2 text-sm">Stuck?</span>
-                <button onClick={toggleSolution} className="px-2 py-1 border border-gray-400 rounded">{showSolution ? 'Hide solution' : 'Show solution'}</button>
+                {/* Prevent default on mousedown to keep focus in editor when toggling solution */}
+                <button onClick={toggleSolution} onMouseDown={e => e.preventDefault()} className="px-2 py-1 border border-gray-400 rounded">{showSolution ? 'Hide solution' : 'Show solution'}</button>
               </p>
               {showSolution ? <p className="mt-6 font-mono text-right text-gray-400">{questions[questionIdx].solution}</p> : null}
             </>
