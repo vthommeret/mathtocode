@@ -13,4 +13,6 @@ math`\prod_{i,j=1}^n 3*{m_{ij}}`
 
 The Π symbol is a capital π symbol, pronounced "pi". Implement this equation similarly using the `prod` function. Note that the matrix first element-wise multiplied by 3.
 
+**Hint:** Use the same syntax as `sum` but with `prod` instead. You can click "Back" to see your previous answer.
+
 **Tip:** Make sure to group values where appropriate with parentheses.
