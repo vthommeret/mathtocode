@@ -14,7 +14,7 @@ const Home = ({ questions }) => {
   // Right now this is global state since it's reset when changing
   // questions, but could be moved to answers state if we wanted to
   // persist per question
-  const [showSolution, setShowSolution] = useState(false)
+  const [showingSolution, setShowingSolution] = useState(false)
 
   const answerTextarea = useRef()
 
@@ -109,7 +109,7 @@ const Home = ({ questions }) => {
           }
         }
       }
-      setShowSolution(false)
+      setShowingSolution(false)
     }
   }
 
@@ -127,7 +127,7 @@ const Home = ({ questions }) => {
 
   const toggleSolution = e => {
     e.preventDefault()
-    setShowSolution(!showSolution)
+    setShowingSolution(!showingSolution)
   }
 
   preloadWorker()
@@ -197,11 +197,11 @@ const Home = ({ questions }) => {
           ) : (
             <>
               <p className="pt-8 md:pt-10 text-gray-400 text-right">
-                <span className="mr-2 text-sm">Stuck?</span>
+                {!showingSolution ? <span className="mr-2 text-sm">Stuck?</span> : null}
                 {/* Prevent default on mousedown to keep focus in editor when toggling solution */}
-                <button onClick={toggleSolution} onMouseDown={e => e.preventDefault()} className="px-2 py-1 border border-gray-400 rounded">{showSolution ? 'Hide solution' : 'Show solution'}</button>
+                <button onClick={toggleSolution} onMouseDown={e => e.preventDefault()} className="px-2 py-1 border border-gray-400 rounded">{showingSolution ? 'Hide solution' : 'Show solution'}</button>
               </p>
-              {showSolution ? <p className="mt-6 font-mono text-right text-gray-400">{questions[questionIdx].solution}</p> : null}
+              {showingSolution ? <p className="mt-6 font-mono text-right text-gray-400">{questions[questionIdx].solution}</p> : null}
             </>
           )}
         </div>
