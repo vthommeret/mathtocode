@@ -1,6 +1,6 @@
 ---
 params: [x]
-solution: (1 / x.size) * x.sum()
+solution: x.sum() / x.size
 tests:
   - [ [50] ]
   - [ [10, 20, 30] ]
