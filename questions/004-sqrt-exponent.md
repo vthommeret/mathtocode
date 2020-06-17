@@ -1,6 +1,6 @@
 ---
 params: [x]
-solution: x ** (.5)
+solution: x ** .5
 tests:
   - [25]
   - [16]
