@@ -106,6 +106,12 @@ const Home = ({ questions }) => {
           // Don't autofocus on mobile since it can cause question can go offscreen
           if (window.matchMedia(breakpoint).matches) {
             answerTextarea.current.focus()
+
+          // Focusing the text field effectively "scrolls to top" on desktop
+          // On mobile, scroll to top so next question is visible
+          } else {
+            window.scrollTo(0, 0)
+
           }
         }
       }
