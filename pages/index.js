@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react'
 import { InlineMath, BlockMath } from 'react-katex'
 import TextareaAutosize from 'react-textarea-autosize'
 
-import Head from 'next/head'
 import checkAnswer, { preloadWorker } from '../lib/answer'
 
 const Home = ({ questions }) => {
@@ -140,40 +139,6 @@ const Home = ({ questions }) => {
 
   return (
     <>
-      <Head>
-        <title>Math to Code</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=ASk39Zkf31" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=ASk39Zkf31" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=ASk39Zkf31" />
-        <link rel="manifest" href="/site.webmanifest?v=ASk39Zkf31" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg?v=ASk39Zkf31" color="#000000" />
-        <link rel="shortcut icon" href="/favicon.ico?v=ASk39Zkf31" />
-        <meta name="msapplication-TileColor" content="#000000" />
-        <meta name="theme-color" content="#ffffff" />
-
-        <meta property="og:title" content="Math to Code" />
-        <meta property="og:description" content="Math to Code is an interactive Python tutorial to teach engineers how to read and implement math using the NumPy library." />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://mathtocode.com/images/mathtocode.png" />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:creator" content="Vernon Thommeret" />
-        <meta property="twitter:title" content="Math to Code" />
-        <meta property="twitter:description" content="Math to Code is an interactive Python tutorial to teach engineers how to read and implement math using the NumPy library." />
-        <meta property="twitter:image" content="https://mathtocode.com/images/mathtocode.png" />
-
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169337965-1"></script>
-        <script dangerouslySetInnerHTML={
-            { __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag("js", new Date());
-            gtag("config", 'UA-169337965-1');
-          `}
-        } />
-      </Head>
-
       <div className="container-shadow md:max-w-screen-lg md:mt-10 md:flex md:mx-auto">
         <div className="px-8 py-10 md:px-12 md:py-16 bg-white md:w-1/2">
           <div className="markdown mb-8 md:mb-10 text-lg" dangerouslySetInnerHTML={{ __html: questions[questionIdx].html }} />
