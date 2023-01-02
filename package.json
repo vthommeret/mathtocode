@@ -14,7 +14,7 @@
     "@zeit/next-workers": "^1.0.0",
     "autoprefixer": "^9.8.0",
     "gray-matter": "^4.0.2",
-    "next": "9.4.2",
+    "next": "9.5.5",
     "postcss-import": "^12.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -24,6 +24,6 @@
     "remark-html": "^11.0.2",
     "skulpt": "^1.0.0",
     "tailwindcss": "^1.4.6",
-    "worker-loader": "^2.0.0"
+    "worker-loader": "^3.0.8"
   }
 }
